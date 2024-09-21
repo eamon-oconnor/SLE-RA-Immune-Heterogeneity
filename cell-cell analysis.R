@@ -26,18 +26,8 @@ showDatabaseCategory(CellChatDB)
 # Show the structure of the database
 dplyr::glimpse(CellChatDB$interaction)
 
-# use a subset of CellChatDB for cell-cell communication analysis
-#CellChatDB.use <- subsetDB(CellChatDB, search = "Secreted Signaling", key = "annotation") # use Secreted Signaling
-
 # Only uses the Secreted Signaling from CellChatDB v1
 CellChatDB.use <- subsetDB(CellChatDB, search = list(c("Secreted Signaling"), c("CellChatDB v1")), key = c("annotation", "version"))
-
-# use all CellChatDB except for "Non-protein Signaling" for cell-cell communication analysis
-# CellChatDB.use <- subsetDB(CellChatDB)
-
-
-# use all CellChatDB for cell-cell communication analysis
-# CellChatDB.use <- CellChatDB # simply use the default CellChatDB. We do not suggest to use it in this way because CellChatDB v2 includes "Non-protein Signaling" (i.e., metabolic and synaptic signaling). 
 
 # set the used database in the object
 cc_ra@DB <- CellChatDB.use
@@ -73,8 +63,6 @@ cc_sle <- filterCommunication(cc_sle, min.cells = 10)
 
 cc_hc <- computeCommunProb(cc_hc, type = "triMean", raw.use = "FALSE")
 cc_hc <- filterCommunication(cc_hc, min.cells = 10)
-
-## Extract the inferred cellular communication network as a data frame
 
 ## Infer the cell-cell communication at a signaling pathway level
 cc_ra <- computeCommunProbPathway(cc_ra)
